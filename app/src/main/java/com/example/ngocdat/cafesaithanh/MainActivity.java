@@ -1,5 +1,7 @@
 package com.example.ngocdat.cafesaithanh;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,12 +11,16 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MainActivity extends AppCompatActivity  implements OnMapReadyCallback {
-
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+    private MapFragment map;
+    private GoogleMap googleMap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,10 +37,11 @@ public class MainActivity extends AppCompatActivity  implements OnMapReadyCallba
             }
         });
 
+        map = (MapFragment) getFragmentManager().findFragmentById(R.id.fragment);
+//        map.getMapAsync(this);
 
-        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
-//        mapFragment.getMapAsync(this);
-
+        googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragment)).getMap();
+        vietnam();
 
     }
 
@@ -63,5 +70,16 @@ public class MainActivity extends AppCompatActivity  implements OnMapReadyCallba
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
+    }
+    public  void vietnam(){
+        LatLng vietnam = new LatLng(14.490578, 108.397636);
+
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(vietnam, 5));
+
+//        googleMap.addMarker(new MarkerOptions()
+//                .title("Việt Nam")
+//                .snippet("Đây là Việt Nam!")
+//                .position(vietnam));
     }
 }
